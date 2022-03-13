@@ -59,8 +59,9 @@ class YTDLSource(discord.PCMVolumeTransformer):
     async def get_data(cls, search: str, loop, download=False):
         print("get data")
         loop = loop or asyncio.get_event_loop()
-
-        to_run = partial(ytdl.extract_info, url=search, download=download)
+        # to_run = partial(ytdl.extract_info, url=search, download=download)
+        # deveria equivaler a:
+        to_run = ytdl.extract_info(url=search, download=download)
         data = await loop.run_in_executor(None, to_run)
 
         return data
@@ -77,11 +78,10 @@ class YTDLSource(discord.PCMVolumeTransformer):
 
         if download:
             source = ytdl.prepare_filename(data)
+            return cls(discord.FFmpegPCMAudio(source), data=data, requester=ctx.author)
         else:
 
             return {'webpage_url': data['webpage_url'], 'requester': ctx.author, 'title': data['title']}
-
-        return cls(discord.FFmpegPCMAudio(source), data=data, requester=ctx.author)
 
     @classmethod
     async def regather_stream(cls, data, *, loop):
@@ -123,7 +123,6 @@ class MusicPlayer:
 
         while not self.bot.is_closed():
             self.next.clear()
-
             try:
                 async with timeout(5):
                     source = await self.queue.get()
@@ -152,15 +151,17 @@ class MusicPlayer:
 
             try:
                 self._guild.voice_client.play(source, after=lambda _: self.bot.loop.call_soon_threadsafe(self.next.set))
+
                 embed = discord.Embed(title="Now playing", description=f"[{source.title}]({source.web_url})",
                                       colour=discord.Color.green())
                 self.np = await self._channel.send(embed=embed)
+
                 dbcon = self.dbcon
                 print(f"{self._guild.id} {self._guild.name}")
                 dbcon.playSong(source.data['id'], source.title, source.web_url, source.data['duration'], self._guild.id,
                                self._guild.name, source.requester.id, source.requester.name)
 
-                await self.next.wait()
+                await self.next.wait() #Espera a que termine la cancion
             except discord.errors.ClientException as e:
                 print(f'There was an error processing your song.\n'
                       f'```css\n[{e}]\n```')
