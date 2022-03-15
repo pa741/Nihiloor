@@ -15,14 +15,14 @@ class VServer:
         self.serverDict = serverDict
 
     async def response(self, websocket, path):
-        # El path se corresponde a /serverid#userid
+        # El path se corresponde a /serverid_userid
         print("server started")
         message = await websocket.recv()
         print(message)
         serverid = int(path.split("_")[0][1:])
         userid = int(path.split("_")[1])
         if serverid in self.serverDict:
-            voice = self.serverDict[serverid]
+            voice = self.serverDict[serverid].voice
             await voice.command(message, userid)
 
         else:
@@ -45,6 +45,17 @@ class Voice:
             case "join":
                 await self.bot.joinVC(userid)
             case "play":
-                await self.bot.play(params,userid)
+                await self.bot.play(params, userid)
+            case "skip":
+                await self.bot.skip()
+            case "shuffle":
+                await self.bot.shuffle()
+            case "previous":
+                await self.bot.previous()
+            case "pause":
+                await self.bot.playPause()
+            case "leave":
+                await self.bot.leaveVC()
+
 
 
