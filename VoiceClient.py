@@ -5,7 +5,10 @@ from pynput import keyboard
 from pynput.keyboard import Key, Listener
 import sys
 
-uri = f'ws://localhost:8800/688391132815949878_294961216634486786'
+#Tiene que ser ejecutado desde la cmd tal y como el bot indica
+#Deberiais tener el servidor en un host remoto o al menos con los puertos abiertos poner aqui la IP del servidor
+#En lugar de localhost
+uri = f'ws://localhost:8800/{sys.argv[1]}_{sys.argv[2]}'
 print(uri)
 loop = asyncio.new_event_loop()
 asyncio.set_event_loop(loop)
