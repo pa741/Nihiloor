@@ -24,7 +24,7 @@ This bot, can run simultaneously on as many servers as your memory allows.
     - shuffle
     - leave
   - Better client in progress.
-- Database that logs when a user plays a song. (Usefull in case in the future I add a `!playFavourite` command
+- Database that logs when a user plays a song. (Usefull in case in the future I add a `!playFavourite` command)
 - Many more to come!
 
 ### Requirements
