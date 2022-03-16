@@ -28,7 +28,8 @@ This bot, can run simultaneously on as many servers as your memory allows.
 - Many more to come!
 
 ### Requirements
-Python 3.10.2 (If you get a higher version you need to replace the Pyaudio file in VoiceClient.rar for its [corresponding version](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio))
+- Python 3.10.2 (If you get a higher version you need to replace the Pyaudio file in VoiceClient.rar for its [corresponding version](https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio))
+- FFMPEG is needed to play audio on discord.
 
 ### Voice QuickStart
 You need to add your servers public ip to the VoiceServer.py URI (Replace localhost).
