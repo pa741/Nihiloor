@@ -62,6 +62,7 @@ class MusicPlayer:
         self.loop.create_task(self.player_loop())
 
     async def player_loop(self):
+        # MESSAGE ERROR 404 en playerMessage no enonctrado
 
         while True:
             self.playing.clear()  # Establece el evento como empezado.
@@ -81,7 +82,10 @@ class MusicPlayer:
             # Reproduce la cancion, y cambia el evento cuando a terminado
             self.bot.guild.voice_client.play(source, after=lambda e: self.playing.set())
 
-            await self.bot.updatePlayer(current=self.current)
+            try : #Posiblemente inecesario falta testear en condiciones
+                await self.bot.updatePlayer(current=self.current)
+            except Exception:
+                print("Algo salio mal actualizando el reproductor")
 
             await self.playing.wait()  # Espera a que termine la cancion
 

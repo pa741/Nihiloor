@@ -65,7 +65,7 @@ async def on_reaction_add(reaction, user):
             case "⏭":
                 bot.skip(user.id)
             # En caso del loop, si esta descativado el icono sera 🔁 sino sera el recuadro verde
-            case ("🔁" | "🟩"):
+            case "🔁":
                 bot.loop()
                 if bot.music.looping:
                     await message.add_reaction("🟩")
@@ -95,4 +95,4 @@ with open("keys.json") as jsonFile:
     jsonFile.close()
 
 #Ejecucion del bot
-client.run(jsonObject["devKey"])
+client.run(jsonObject["botKey"])

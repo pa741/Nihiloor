@@ -47,7 +47,7 @@ class Voice:
             case "play":
                 await self.bot.play(params, userid)
             case "skip":
-                await self.bot.skip()
+                await self.bot.skip(userid)
             case "shuffle":
                 await self.bot.shuffle()
             case "previous":
